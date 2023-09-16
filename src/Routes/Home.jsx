@@ -1,17 +1,40 @@
-import React from 'react'
-import Card from '../Components/Card'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useAppContext } from '../Components/AppContext';
+import Card from '../Components/Card';
+import "../index.css";
 
-//Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
+function Home() {
+  const { state } = useAppContext();
+  const h1ClassName = state.theme === 'light' ? 'light-theme' : 'dark-theme';
 
-const Home = () => {
   return (
-    <main className="" >
-      <h1>Home</h1>
-      <div className='card-grid'>
-        {/* Aqui deberias renderizar las cards */}
-      </div>
-    </main>
-  )
+    <div className={h1ClassName} >
+      <h1 >Lista de Dentistas</h1>
+    
+      {state.loading ? (
+        <p>Cargando...</p>
+      ) : (
+      
+        <div className={state.theme === 'light' ? 'light-theme' : 'dark-theme'}>
+          
+        <div className="card-grid">
+        
+          {state.dentists.map((dentist) => (
+              <div key={dentist.id}>
+             
+            
+              <Card dentist={dentist} id={dentist.id} />
+              
+            </div>
+           
+          ))}
+        </div>
+        </div>
+    
+      )}
+    </div>
+  );
 }
 
-export default Home
+export default Home;
